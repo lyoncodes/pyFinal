@@ -1,0 +1,4 @@
+.git
+.venv
+__pycache__/
+deluxeFinder/deluxeFinder/settings.ini
