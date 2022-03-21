@@ -1,5 +1,5 @@
 .git
 .venv
-deluxeFinder/.keys
+*.keys
 __pycache__/
-deluxeFinder/deluxeFinder/settings.ini
+*.ini
