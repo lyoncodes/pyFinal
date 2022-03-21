@@ -1,4 +1,5 @@
 .git
 .venv
+.keys
 __pycache__/
 deluxeFinder/deluxeFinder/settings.ini
