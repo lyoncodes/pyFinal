@@ -21,3 +21,35 @@ from .forms import (
 )
 
 # Create your views here.
+class AccountView(TemplateView):
+  '''
+  User account page/ home page
+  '''
+  template_name = "users/account.html"
+
+  # @login_required
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
+
+class SignInView(FormView):
+  '''
+  Sign in form
+  '''
+  template_name = "registration/login.html"
+  form_class = AuthForm
+  success_url = "/"
+
+def profile_view(request):
+  '''
+  profile view
+  '''
+  user = request.user
+  prof = user.userprofile
+
+  form = UserProfileForm(instance = prof)
+
+  context = {'form': form}
+  context['google_api_key'] = settings.GOOGLE_API_KEY
+  context['base_country'] = "US"
+
+  return render(request, 'users/profile.html', context)

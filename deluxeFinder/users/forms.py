@@ -38,7 +38,7 @@ class AuthForm(AuthenticationForm):
     fields = ('username', 'password',)
 
 
-class UserProfileForm(forms.modelForm):
+class UserProfileForm(forms.ModelForm):
   '''
   Extends Django User Model, creates hiddenInput element for HTML rendering
   '''

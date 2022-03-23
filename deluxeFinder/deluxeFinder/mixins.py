@@ -19,7 +19,7 @@ def FormErrors(*args):
 def RedirectParams(**kwargs):
   '''
   appends url parameters when redirecting users, allowing request.get to obtain data from url
-  i.e. lat_a, lat_b...
+  i.e. request.GET.get("lat_a", None)
   '''
   url = kwargs.get("url")
   params = kwargs.get("params")
