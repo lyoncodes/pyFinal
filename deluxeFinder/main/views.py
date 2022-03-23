@@ -1,10 +1,22 @@
 from multiprocessing import context
 from django.shortcuts import render, redirect, reverse
 from django.conf import settings
+from main.forms import LocationForm
 
 from deluxeFinder.mixins import Directions
 
 # Create your views here.
+def locationForm(request):
+  form = LocationForm
+  if request.method == 'POST':
+    form = LocationForm(request.POST)
+    if form.is_valid():
+      post = form.save(commit = True)
+      post.save()
+      form = LocationForm()
+  else:
+    form = LocationForm()
+  return render(request, 'main/newRoute.html', {'form': form})
 
 def route(request):
   context = {
