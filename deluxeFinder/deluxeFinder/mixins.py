@@ -52,14 +52,9 @@ def Directions(*args, **kwargs):
   long_a = kwargs.get("long_a")
   lat_b = kwargs.get("lat_b")
   long_b = kwargs.get("long_b")
-  lat_c = kwargs.get("lat_c")
-  long_c = kwargs.get("long_c")
-  lat_d = kwargs.get("lat_d")
-  long_d = kwargs.get("long_d")
 
   origin = f'{lat_a}, {long_a}'
   destination = f'{lat_b},{long_b}'
-  waypoints = f'{lat_c},{long_c}|{lat_d},{long_d}'
 
   '''
   req/res handling
@@ -69,29 +64,30 @@ def Directions(*args, **kwargs):
     params = {
       'origin': origin,
       'destination': destination,
-      'waypoints': waypoints,
       'key': settings.GOOGLE_API_KEY
     }
   )
 
   directions = result.json()
-
+  # print(directions)
   if directions["status"] == "OK":
     routes = directions["routes"][0]["legs"]
 
     distance = 0
     duration = 0
-    route_list = []
-
+    route_list = [] # list for storing directions
+    print(routes)
     for route in range(len(routes)):
-      distance += int(route[route]["distance"]["value"])
+      # print(routes[route])
+      distance += int(routes[route]["distance"]["value"])
       duration += int(routes[route]["duration"]["value"])
 
+      # populate route_list
       route_step = {
         'origin': routes[route]["start_address"],
         'destination': routes[route]["end_address"],
         'distance': routes[route]["distance"]["text"],
-        'duration': routes[route]["duration"]["text"],
+        'duration': routes[route]["duration"]["text"], 
 
         'steps': [
           [

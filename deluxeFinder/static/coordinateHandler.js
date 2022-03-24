@@ -18,6 +18,7 @@ function initAutocomplete() {
     })
   }
 
+  // add event listeners
   autocomplete_a.addListener('place_changed', function(){
           onPlaceChanged('a')
       });
@@ -40,12 +41,15 @@ function onPlaceChanged (addy){
     geocoder.geocode( { 'address': address}, function(results, status) {
 
         if (status == google.maps.GeocoderStatus.OK) {
+            // get lat/long values from response results
             var latitude = results[0].geometry.location.lat();
             var longitude = results[0].geometry.location.lng();
 
+            // assign values to hidden inputs
             $('#' + lat_id).val(latitude) 
             $('#' + long_id).val(longitude) 
 
+            // call calculate
             CalcRoute()
         } 
     }); 
@@ -76,13 +80,16 @@ function CalcRoute(){
 
       console.log(params)
 
-      // var esc = encodeURIComponent;
-      // var query = Object.keys(params)
-      //     .map(k => esc(k) + '=' + esc(params[k]))
-      //     .join('&');
+    //   format URL
 
-      // url = '/map?' + query
-      // window.location.assign(url)
+      var esc = encodeURIComponent;
+      var query = Object.keys(params)
+          .map(k => esc(k) + '=' + esc(params[k]))
+          .join('&');
+
+      url = '/map?' + query
+      console.log(url)
+      window.location.assign(url)
     }
 
 }
