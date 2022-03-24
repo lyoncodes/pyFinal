@@ -56,16 +56,14 @@
     </thead>
     <tbody>
       {% for leg in directions.route %}
-          <tr>
-          <td>Leg {{ forloop.counter }}</td>
-          <td></td>
-          <td></td>  
+        <tr>
+          <td> {{ forloop.counter }} </td>
         </tr>
         {% for dist, dur, text in leg.steps %}
         <tr>
-          <td>{{text|safe}}</td>
-          <td>{{dist}}</td>
-          <td>{{dur}}</td>   
+          <td> {{ dist }} </td>
+          <td> {{ dur }} </td>
+          <td> {{ text|safe }} </td>
         </tr>
         {% endfor %}
       {% endfor %}
@@ -93,10 +91,6 @@
     var long_a = {{long_a|safe}};
     var lat_b = {{lat_b|safe}};
     var long_b = {{long_b|safe}};
-    var lat_c = {{lat_c|safe}};
-    var long_c = {{long_c|safe}};
-    var lat_d = {{lat_d|safe}};
-    var long_d = {{long_d|safe}};
     var origin = "{{origin|safe}}";
     var destination = "{{destination|safe}}";
     var directions = {{directions|safe}}
