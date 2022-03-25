@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dick's Locations</h2>
+<table>
+{% for location in locations %}
+  <tr>
+    <th>{{ location.name }}</th>
+    <td>{{location.address}} </td>
+    <td>({{ location.latitude }} </td>
+    <td>{{ location.longitude }})</td>
+  </tr>
+{% endfor %}
+</table>
+{% comment %} <h2>New Location</h2>
+<table class='table'>
+  <form method='POST', class='post-form'> {% csrf_token %}
+    {{ form.as_table }}
+</table>
+<button type="submit" class="save btn btn_default">Save</button>
+</form> {% endcomment %}
+{% endblock content %}

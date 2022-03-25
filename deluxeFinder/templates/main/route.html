@@ -10,23 +10,39 @@
 
 {% block content %}
 
-<h3>Find The Nearest Dick's Drive In</h3>
+<h1>The Deluxe Finder</h1>
+<p>This application guides you to the closest Dick's Drive In from anywhere in the world.</p>
+<p>It is built using Python and Javascript.</p>
 
 <div class="container">
 
-   <label for="point-a">Start Address</label>
-   <input type="text" placeholder="*Begin typing address" id="point-a" name="google_address_a">
+  <label for="point-a">Start Address</label>
+  <input type="text" placeholder="*Begin typing address" id="point-a" name="google_address_a">
 
-   <label for="point-b">Destination Address</label>
-   <input type="text" placeholder="*Begin typing address" id="point-b" name="google_address_b">
+  {% comment %} <label for="point-b">Destination Address</label>
+  <input type="text" placeholder="*Begin typing address" id="point-b" name="google_address_b"> {% endcomment %}
 
+  <!-- hidden inputs to collect values -->
+  <input type="hidden" class="geo" id="id-lat-a" value="">
+  <input type="hidden" class="geo" id="id-long-a" value="">
+  <input type="hidden" class="geo" id="id-lat-waypoint" value="">
+  <input type="hidden" class="geo" id="id-long-waypoint" value="">
 
-   <!-- hidden inputs to collect values -->
-   <input type="hidden" class="geo" id="id-lat-a" value="">
-   <input type="hidden" class="geo" id="id-long-a" value="">
-   <input type="hidden" class="geo" id="id-lat-b" value="">
-   <input type="hidden" class="geo" id="id-long-b" value="">
-
+  <table>
+  {% if waypoints %}
+    <th>{{request.user.username}}'s Waypoints</th>
+    {% for waypoint in waypoints %}
+      <tr>
+        <td>{{waypoint.name}}</td>
+        <tr>
+          <td><input readonly id="point-waypoint" class="point-waypoint" value="{{waypoint.address}}"></td>
+        </tr>
+      </tr>
+    {% endfor %}
+  {% else %}
+    <a href="/newpoint">No Waypoints</a>
+  {% endif %}
+  </table>
 
 </div>
 

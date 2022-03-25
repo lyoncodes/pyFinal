@@ -9,34 +9,13 @@
 
 {% block content %}
 
-<h3>Django Google API Course - User Profile</h3>
+<h3>{{user.username}}'s Waypoints</h3>
 
 <div class="container">
   {% if request.user.userprofile.has_profile %}
-  <table>
-    <thead>
-      <tr>
-        <th>Field</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Address</td>
-        <td>
-          <address>
-            {{request.user.userprofile.address}}<br>
-            {{request.user.userprofile.town}}<br>
-            {{request.user.userprofile.county}}<br>
-            {{request.user.userprofile.post_code}}<br>
-          </address>
-        </td>
-      </tr>
-    </tbody>
-  </table>
   <label for="id-google-address">Change Address</label>
   {% else %}
-  <label for="id-google-address">Add Address</label>
+  <label for="id-google-address">Add a Waypoint</label>
   {% endif %}
 
   <input type="text" placeholder="*Begin typing address" id="id-google-address" name="google_address">

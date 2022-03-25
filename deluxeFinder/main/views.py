@@ -1,27 +1,54 @@
 from multiprocessing import context
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django.conf import settings
-from main.forms import LocationForm
+from main.forms import LocationForm, Location, WaypointForm, Waypoint
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 
 from deluxeFinder.mixins import Directions
 
 # Create your views here.
-def locationForm(request):
-  form = LocationForm
+# @login_required
+# def locationForm(request):
+#   locations = Location.objects.all()
+#   form = LocationForm
+#   if request.method == 'POST':
+#     form = LocationForm(request.POST)
+#     if form.is_valid():
+#       post = form.save(commit = True)
+#       post.save()
+#       form = LocationForm()
+#   else:
+#     form = LocationForm()
+#   return render(request, 'main/locations.html', {'form': form, 'locations': locations})
+
+@login_required
+def waypointForm(request):
+  form = WaypointForm
   if request.method == 'POST':
-    form = LocationForm(request.POST)
+    form = WaypointForm(request.POST)
     if form.is_valid():
       post = form.save(commit = True)
       post.save()
-      form = LocationForm()
+      form = WaypointForm()
   else:
-    form = LocationForm()
-  return render(request, 'main/newRoute.html', {'form': form})
+    form = WaypointForm()
+  return render(request, 'main/newpoint.html', {'form': form})
+
+@login_required
+def locations(request):
+  locations = Location.objects.all()
+  return render(request, 'main/locations.html', {'locations': locations})
 
 def route(request):
+  waypoints = Waypoint.objects.filter(userId = request.user.id)
   context = {
     "google_api_key": settings.GOOGLE_API_KEY,
-    "base_country": "US"
+    "base_country": "US",
+    "waypoints": waypoints
   }
   return render(request, 'main/route.html', context)
 

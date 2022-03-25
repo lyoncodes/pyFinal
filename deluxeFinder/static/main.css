@@ -313,3 +313,13 @@ input:hover,
 .btn:hover {
   opacity: 1;
 }
+
+.brand-logo{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.point-waypoint{
+  cursor: pointer;
+}
