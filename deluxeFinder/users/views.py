@@ -6,12 +6,6 @@ from django.http import JsonResponse
 from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 
-from deluxeFinder.mixins import(
-  AjaxFormMixin,
-  FormErrors,
-  RedirectParams,
-)
-
 from .forms import (
   UserForm,
   UserProfileForm,

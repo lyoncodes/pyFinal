@@ -56,10 +56,16 @@ const loc_coordinates = [
 
 ]
 
-var auto_fields = ['a', 'b']
+const auto_fields = ['a', 'b']
+// points = document.getElementsByClassName('point-waypoint')
+// for (point of points) {
+//   point.addEventListener('click', () => {
+//     onPlaceChanged('waypoint')
+//   })
+// }
+
 
 function initAutocomplete() {
-
   for (i = 0; i < auto_fields.length; i++) {
     var field = auto_fields[i]
     window['autocomplete_'+field] = new google.maps.places.Autocomplete(
@@ -76,42 +82,36 @@ function initAutocomplete() {
   });
 }
 
-points = document.getElementsByClassName('point-waypoint')
-for (point of points) {
-  point.addEventListener('click', () => {
-    onPlaceChanged('waypoint')
-  })
+function onPlaceChanged(token){  
+    var auto = window['autocomplete_'+token]
+    var el_id = 'point-' + token
+    var lat_id = 'id-lat-' + token
+    var long_id = 'id-long-' + token
+    var address = document.getElementById(el_id).value // collect values from route form input
+    callGeoCode(address, lat_id, long_id, token)
 }
 
+function callGeoCode(address, lat_id, long_id, token){
+  const geocoder = new google.maps.Geocoder() // instantiate new Geocoder
 
-function onPlaceChanged (addy){  
+  geocoder.geocode( { 'address': address}, function(results, status) {
 
-    var auto = window['autocomplete_'+addy]
-    var el_id = 'point-'+addy
-    var lat_id = 'id-lat-' + addy
-    var long_id = 'id-long-' + addy
-    var token = addy
-    var geocoder = new google.maps.Geocoder() // instantiate new Geocoder
-    var address = document.getElementById(el_id).value // collect values from route form input
+    if (status == google.maps.GeocoderStatus.OK) {
+        // get lat/long values from response results
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
 
-    geocoder.geocode( { 'address': address}, function(results, status) {
+        closest_location_from_point = findClosest(results[0].geometry.location)
 
-        if (status == google.maps.GeocoderStatus.OK) {
-            // get lat/long values from response results
-            var latitude = results[0].geometry.location.lat();
-            var longitude = results[0].geometry.location.lng();
+        // assign values to hidden inputs
+        $('#' + lat_id).val(latitude) 
+        $('#' + long_id).val(longitude) 
+        console.log($('#' + lat_id).val(latitude) )
 
-            closest_location_from_point = findClosest(results[0].geometry.location)
-
-            // assign values to hidden inputs
-            $('#' + lat_id).val(latitude) 
-            $('#' + long_id).val(longitude) 
-            console.log($('#' + lat_id).val(latitude) )
-
-            // call calculate
-            calcRoute(closest_location_from_point, token)
-        } 
-    }); 
+        // call calculate
+        calcRoute(closest_location_from_point, token)
+    } 
+  }); 
 }
 
 function validateForm() {

@@ -35,7 +35,7 @@
       <tr>
         <td>{{waypoint.name}}</td>
         <tr>
-          <td><input readonly id="point-waypoint" class="point-waypoint" value="{{waypoint.address}}"></td>
+          <td><button onclick="callGeoCode('{{ waypoint.address }}', 'id-lat-waypoint', 'id-long-waypoint', 'waypoint')", id="point-waypoint" class="point-waypoint" value="{{waypoint.address}}">Find</button></td>
         </tr>
       </tr>
     {% endfor %}
