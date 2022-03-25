@@ -48,11 +48,16 @@ def Directions(*args, **kwargs):
   '''
   Direction engine
   '''
+  
+  '''
+  get and assign params
+  '''
   lat_a = kwargs.get("lat_a")
   long_a = kwargs.get("long_a")
+
   lat_b = kwargs.get("lat_b")
   long_b = kwargs.get("long_b")
-
+  
   origin = f'{lat_a}, {long_a}'
   destination = f'{lat_b},{long_b}'
 
@@ -76,13 +81,16 @@ def Directions(*args, **kwargs):
     distance = 0
     duration = 0
     route_list = [] # list for storing directions
-    print(routes)
+    # print(routes)
     for route in range(len(routes)):
       # print(routes[route])
       distance += int(routes[route]["distance"]["value"])
       duration += int(routes[route]["duration"]["value"])
 
-      # populate route_list
+      '''
+      populate route list
+      '''
+
       route_step = {
         'origin': routes[route]["start_address"],
         'destination': routes[route]["end_address"],
