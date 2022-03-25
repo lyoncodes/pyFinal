@@ -21,5 +21,10 @@ class WaypointTest(TestCase):
   def test_tablename(self):
     self.assertEqual(str(self.type._meta.db_table), 'waypoint')
   
+  def test_valid_address(self):
+    self.assertTrue(self.type.address)
+    self.assertIs(type(self.type.address), str)
+  
   def test_userId(self):
     self.assertTrue(self.type.userId)
+  
